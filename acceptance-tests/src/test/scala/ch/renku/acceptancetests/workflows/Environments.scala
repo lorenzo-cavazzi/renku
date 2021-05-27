@@ -95,7 +95,9 @@ trait Environments {
     `click new & wait for image to build`
     `start environment & wait util it's not ready`
 
+    // sleep (3 seconds)
     projectPage.Environments.Running.connectToJupyterLab
+    // sleep (3 seconds)
 
     Then("a JupyterLab page is opened on a new tab")
     val jupyterLabPage = JupyterLabPage(projectId)

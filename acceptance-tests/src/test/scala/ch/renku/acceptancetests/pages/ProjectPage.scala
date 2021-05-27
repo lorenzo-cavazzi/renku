@@ -319,6 +319,9 @@ class ProjectPage(val projectSlug: String, val namespace: String)
           .getOrElse(fail("Environments -> Running title not found"))
       }
 
+      // def connectToJupyterLabUnprivileged(implicit webDriver: WebDriver, spec: AcceptanceSpec): Unit =
+      //   connectToJupyterLab(s"a[href*='/jupyterhub/user/']", "")
+
       def connectToJupyterLab(implicit webDriver: WebDriver, spec: AcceptanceSpec): Unit =
         connectToJupyterLab(s"a[href*='/jupyterhub/user/']", s"div.sessionsButton > button")
 
@@ -339,9 +342,19 @@ class ProjectPage(val projectSlug: String, val namespace: String)
       )(implicit webDriver: WebDriver, spec: AcceptanceSpec): Unit = eventually {
         import spec.{And, Then}
         And("tries to connect to JupyterLab " + buttonSelector)
-        if (!buttonDropdown.isEmpty()) {
+
+        // val datasetNotInKgWarningSign = datasetPage.datasetNotInKgWarning
+        // if (datasetNotInKgWarningSign.size > 0) fail("The dataset is not in the KG")
+        sleep(2 seconds)
+        if (!buttonDropdown.isEmpty() && (findAll(cssSelector(buttonDropdown)) toList).size > 0) {
+          // var buttonDropdownElements = findAll(cssSelector(buttonSelector)) toList
+          //if (buttonDropdownElements.size > 0)
+          // if ((findAll(cssSelector(buttonDropdown)) toList).size > 0)
+          // sleep(2 seconds)
           connectButton(buttonDropdown).click()
           sleep(2 seconds)
+          // connectButton(buttonDropdown).click()
+          // sleep(2 seconds)
         }
         connectButton(buttonSelector).click()
         sleep(2 seconds)
